@@ -84,7 +84,8 @@ func trigger_powershell(enable bool) {
         // handle current state (save if not default, to be able to restore former state)
         current_state, _, err_cs := key_explorer.GetIntegerValue("DisallowRun")
         if err_cs != nil {
-            events.AppendText("Error reading DisallowRun value\n")
+            // no need to save state
+            //events.AppendText("Error reading DisallowRun value\n")
         } else {
             // save state
             hardentools_key.SetDWordValue("SavedStateDisallowRun", uint32(current_state))

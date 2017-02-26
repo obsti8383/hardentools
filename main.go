@@ -80,6 +80,8 @@ func disable_all() {
     trigger_powershell(false)
     progress.SetValue(90)
     trigger_uac(false)
+    progress.SetValue(95)
+    trigger_fileassoc(false)
     progress.SetValue(100)
 
     mark_status(true)
@@ -106,6 +108,8 @@ func restore_all() {
     trigger_powershell(true)
     progress.SetValue(90)
     trigger_uac(true)
+    progress.SetValue(95)
+    trigger_fileassoc(true)
     progress.SetValue(100)
 
     mark_status(false)

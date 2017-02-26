@@ -25,6 +25,15 @@ import (
 )
 
 func trigger_fileassoc(enable bool) {
+    //TODO: extensions := { ".hta", ".js", "...." }
+    // org_filetypes := { "htafile", "..." }
+    // Documentation:
+    // What better not to disable:
+    // - .bat/.cmd (most probably breaks many programs; but would also prevent arbitrary code (including cmd.exe and powershell.exe) to be executed, even if disabled using Explorer\DisallowRun)
+    // - 
+    // What to disable:
+    // - .hta (allows execution of JavaScript and other scripting languages; seldomly run by user directly; to be tested)
+    
     // HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\FileExts\.hta\OpenWithProgids
     key, _ := registry.OpenKey(registry.CURRENT_USER, "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\FileExts\\.hta\\OpenWithProgids", registry.ALL_ACCESS)
 

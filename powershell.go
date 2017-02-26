@@ -54,7 +54,15 @@ func trigger_powershell(enable bool) {
             }
         }
         
-        // delete values for disallowed executables (by iterating all existing values); only works if hardentools values are the last ones
+        // delete values for disallowed executables (by iterating all existing values)
+        // TODO: This only works if the hardentools values are the last
+        //       ones (if values are deleted and numbers are not in
+        //       consecutive order anymore, that might lead to Explorer
+        //       ignoring entries - to be tested
+        // TODO: This implementation currently also deletes values that
+        //       were not created by hardentools if they are equivalent
+        //       with the hardentools created ones (it has to be decided
+        //       if this is a bug or a feature 
         key_disallow, err := registry.OpenKey(registry.CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer\\DisallowRun", registry.ALL_ACCESS)
         if err != nil {
             events.AppendText("!! CreateKey to disable powershell failed.\n")

@@ -77,6 +77,7 @@ func restore_all() {
 }
 
 func trigger_all(harden bool) {
+	trigger_smbv1(harden)
 	trigger_wsh(harden)
 	trigger_ole(harden)
 	trigger_macro(harden)
@@ -107,7 +108,7 @@ func main() {
 	MainWindow{
 		AssignTo: &window,
 		Title:    "Harden - Security Without Borders",
-		MinSize:  Size{400, 300},
+		MinSize:  Size{600, 600},
 		Layout:   VBox{},
 		Children: []Widget{
 			Label{Text: label_text},

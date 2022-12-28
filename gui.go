@@ -118,7 +118,8 @@ func createMainGUIContent(elevationStatus bool) {
 			}
 		}(hardenSubject.Description())
 		help := widget.NewButtonWithIcon("", theme.HelpIcon(), onTapFunc)
-		expertCompWidgetArray[i] = container.NewHBox(check, help)
+
+		expertCompWidgetArray[i] = container.NewHBox(help, check)
 	}
 
 	// Set labels / text fields (harden or restore).
@@ -160,7 +161,8 @@ func createMainGUIContent(elevationStatus bool) {
 	hardenButton := widget.NewButton(buttonText, func() { buttonFunc() })
 	hardenButton.SetIcon(theme.ConfirmIcon())
 
-	introText := widget.NewLabelWithStyle("Hardentools is designed to disable a number of \"features\" exposed by Microsoft\n"+
+	introText := widget.NewLabelWithStyle("Hardentools is designed to disable a number of"+
+		" \"features\" exposed by Microsoft\n"+
 		"Windows and some widely used applications (Microsoft Office and Adobe PDF Reader,\n"+
 		"for now). These features, commonly thought for enterprise customers,\n"+
 		"are generally useless to regular users and rather pose as dangers as\n"+

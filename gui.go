@@ -1,5 +1,5 @@
 // Hardentools
-// Copyright (C) 2017-2021 Security Without Borders
+// Copyright (C) 2017-2022 Security Without Borders
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -81,7 +81,7 @@ func createMainGUIContent(elevationStatus bool) {
 
 	// Build up expert settings checkboxes and map.
 	expertConfig = make(map[string]bool)
-	expertCompWidgetArray := make([]*widget.Check, len(allHardenSubjects))
+	expertCompWidgetArray := make([]*fyne.Container, len(allHardenSubjects))
 
 	for i, hardenSubject := range allHardenSubjects {
 		var subjectIsHardened = hardenSubject.IsHardened()
@@ -105,11 +105,20 @@ func createMainGUIContent(elevationStatus bool) {
 			enableField = false
 		}
 
-		expertCompWidgetArray[i] = widget.NewCheck(hardenSubject.LongName(), checkBoxEventGenerator(hardenSubject.Name()))
-		expertCompWidgetArray[i].SetChecked(expertConfig[hardenSubject.Name()])
+		check := widget.NewCheck(hardenSubject.LongName(), checkBoxEventGenerator(hardenSubject.Name()))
+		check.SetChecked(expertConfig[hardenSubject.Name()])
 		if !enableField {
-			expertCompWidgetArray[i].Disable()
+			check.Disable()
 		}
+
+		onTapFunc := func(description string) func() {
+			var desc = description
+			return func() {
+				showInfoDialog(desc)
+			}
+		}(hardenSubject.Description())
+		help := widget.NewButtonWithIcon("", theme.HelpIcon(), onTapFunc)
+		expertCompWidgetArray[i] = container.NewHBox(check, help)
 	}
 
 	// Set labels / text fields (harden or restore).
@@ -140,7 +149,7 @@ func createMainGUIContent(elevationStatus bool) {
 	}
 	expertSettingsHBox := container.NewHBox(expertTab1, expertTab2)
 	expertTabWidget := widget.NewCard("", "Expert Settings",
-		container.NewVBox(widget.NewLabelWithStyle(expertSettingsText, fyne.TextAlignCenter, fyne.TextStyle{Italic: true}),
+		container.NewVBox(widget.NewLabelWithStyle(expertSettingsText, fyne.TextAlignCenter, fyne.TextStyle{}),
 			expertSettingsHBox))
 
 	// Build main GUI window's main tab.
@@ -160,7 +169,7 @@ func createMainGUIContent(elevationStatus bool) {
 		"the attack surface by disabling the low-hanging fruit. Hardentools is\n"+
 		"for individuals at risk, who might want an extra level of security intended\n"+
 		"at the price of some usability. It is not intended for corporate environments.\n",
-		fyne.TextAlignCenter, fyne.TextStyle{Italic: true})
+		fyne.TextAlignCenter, fyne.TextStyle{})
 
 	mainTabContent := container.NewVBox(
 		widget.NewLabelWithStyle(labelText, fyne.TextAlignCenter, fyne.TextStyle{Bold: true}),

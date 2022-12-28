@@ -47,5 +47,6 @@ var ShowFileExt = &RegistryMultiValue{
 	},
 	shortName:       "Show File Ext",
 	longName:        "Show File Extensions",
+	description:     "Shows file extensions in Windows explorer for all files.",
 	hardenByDefault: true,
 }

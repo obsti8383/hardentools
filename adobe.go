@@ -1,5 +1,5 @@
 // Hardentools
-// Copyright (C) 2017-2021 Security Without Borders
+// Copyright (C) 2017-2022 Security Without Borders
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -54,7 +54,7 @@ var AdobePDFJS = &AdobeRegistryRegExSingleDWORD{
 	AdobeVersions:   standardAdobeVersions,
 	shortName:       "Adobe JavaScript",
 	longName:        "Acrobat Reader JavaScript",
-	description:     "Disables Acrobat Reader JavaScript",
+	description:     "Disables JavaScript in Acrobat Reader. PDF documents that use JavaScript code won't work anymore.",
 	hardenByDefault: true,
 }
 
@@ -83,7 +83,7 @@ var AdobePDFObjects = &MultiHardenInterfaces{
 	},
 	shortName:       "Adobe Objects",
 	longName:        "Acrobat Reader Embedded Objects",
-	description:     "Disables Acrobat Reader embedded objects",
+	description:     "Disables Acrobat Reader embedded objects. PDF documents that contain embedded files won't work anymore.",
 	hardenByDefault: true,
 }
 
@@ -100,7 +100,7 @@ var AdobePDFProtectedMode = &AdobeRegistryRegExSingleDWORD{
 	AdobeVersions:   standardAdobeVersions,
 	shortName:       "Adobe Protected Mode",
 	longName:        "Acrobat Reader Protected Mode",
-	description:     "Enables Acrobat Reader Protected Mode",
+	description:     "Enables Acrobat Reader Protected Mode. This is already enabled by default in current Acrobat Reader versions.",
 	hardenByDefault: true,
 }
 
@@ -117,7 +117,7 @@ var AdobePDFProtectedView = &AdobeRegistryRegExSingleDWORD{
 	AdobeVersions:   standardAdobeVersions,
 	shortName:       "Adobe Protected View",
 	longName:        "Acrobat Reader Protected View",
-	description:     "Enables Acrobat Reader Protected View",
+	description:     "Enables Acrobat Reader Protected View for all files from untrusted sources. In the Protected View mode, most features are disabled. You can view the PDF, but not do much else. In the Protected View, a yellow bar displays on top of the Reader  window. Click Enable All Features to exit the Protected View.",
 	hardenByDefault: true,
 }
 
@@ -128,7 +128,7 @@ var AdobePDFProtectedView = &AdobeRegistryRegExSingleDWORD{
 var AdobePDFEnhancedSecurity = &MultiHardenInterfaces{
 	shortName:       "Adobe Enhanced Security",
 	longName:        "Acrobat Reader Enhanced Security",
-	description:     "Enables Acrobat Reader Enhanced Security",
+	description:     "Enables Acrobat Reader Enhanced Security. This is already enabled by default in current Acrobat Reader versions.",
 	hardenByDefault: true,
 	hardenInterfaces: []HardenInterface{
 		&AdobeRegistryRegExSingleDWORD{

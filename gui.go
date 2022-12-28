@@ -212,13 +212,14 @@ func showErrorDialog(errorMessage string) {
 // showInfoDialog shows an info message.
 func showInfoDialog(infoMessage string) {
 	if mainWindow != nil {
-		ch := make(chan bool)
+		//ch := make(chan bool)
 		infoDialog := dialog.NewInformation("Information", infoMessage, mainWindow)
-		infoDialog.SetOnClosed(func() {
-			ch <- true
-		})
+		//infoDialog.SetOnClosed(func() {
+		//	ch <- true
+		//})
 		infoDialog.Show()
-		<-ch
+		//<-ch
+		//infoDialog.Hide()
 	} else {
 		// no main windows - seem to be in command line mode.
 		Info.Println("Information: " + infoMessage)

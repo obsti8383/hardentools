@@ -47,14 +47,15 @@ type AdobeRegistryRegExSingleDWORD struct {
 // 0 - Disable AcroJS
 // 1 - Enable AcroJS
 var AdobePDFJS = &AdobeRegistryRegExSingleDWORD{
-	RootKey:         registry.CURRENT_USER,
-	PathRegEx:       "SOFTWARE\\Adobe\\Acrobat Reader\\%s\\JSPrefs",
-	ValueName:       "bEnableJS",
-	HardenedValue:   0, // Disable AcroJS
-	AdobeVersions:   standardAdobeVersions,
-	shortName:       "Adobe JavaScript",
-	longName:        "Acrobat Reader JavaScript",
-	description:     "Disables JavaScript in Acrobat Reader. PDF documents that use JavaScript code won't work anymore.",
+	RootKey:       registry.CURRENT_USER,
+	PathRegEx:     "SOFTWARE\\Adobe\\Acrobat Reader\\%s\\JSPrefs",
+	ValueName:     "bEnableJS",
+	HardenedValue: 0, // Disable AcroJS
+	AdobeVersions: standardAdobeVersions,
+	shortName:     "Adobe JavaScript",
+	longName:      "Acrobat Reader JavaScript",
+	description: "Disables JavaScript in Acrobat Reader. PDF documents\n" +
+		"that use JavaScript code might not work as expected.",
 	hardenByDefault: true,
 }
 
@@ -81,9 +82,10 @@ var AdobePDFObjects = &MultiHardenInterfaces{
 			shortName:     "AdobePDFObjects_bSecureOpenFile",
 		},
 	},
-	shortName:       "Adobe Objects",
-	longName:        "Acrobat Reader Embedded Objects",
-	description:     "Disables Acrobat Reader embedded objects. PDF documents that contain embedded files won't work anymore.",
+	shortName: "Adobe Objects",
+	longName:  "Acrobat Reader Embedded Objects",
+	description: "Disables Acrobat Reader embedded objects. PDF documents\n" +
+		"that contain embedded files might not work as expected.",
 	hardenByDefault: true,
 }
 
@@ -93,14 +95,15 @@ var AdobePDFObjects = &MultiHardenInterfaces{
 // 0 - Disable Protected Mode
 // 1 - Enable Protected Mode
 var AdobePDFProtectedMode = &AdobeRegistryRegExSingleDWORD{
-	RootKey:         registry.CURRENT_USER,
-	PathRegEx:       "SOFTWARE\\Adobe\\Acrobat Reader\\%s\\Privileged",
-	ValueName:       "bProtectedMode",
-	HardenedValue:   1,
-	AdobeVersions:   standardAdobeVersions,
-	shortName:       "Adobe Protected Mode",
-	longName:        "Acrobat Reader Protected Mode",
-	description:     "Enables Acrobat Reader Protected Mode. This is already enabled by default in current Acrobat Reader versions.",
+	RootKey:       registry.CURRENT_USER,
+	PathRegEx:     "SOFTWARE\\Adobe\\Acrobat Reader\\%s\\Privileged",
+	ValueName:     "bProtectedMode",
+	HardenedValue: 1,
+	AdobeVersions: standardAdobeVersions,
+	shortName:     "Adobe Protected Mode",
+	longName:      "Acrobat Reader Protected Mode",
+	description: "Enables Acrobat Reader Protected Mode. This is already\n" +
+		"enabled by default in current Acrobat Reader versions.",
 	hardenByDefault: true,
 }
 
@@ -110,14 +113,19 @@ var AdobePDFProtectedMode = &AdobeRegistryRegExSingleDWORD{
 // 0 - Disable Protected View
 // 1 - Enable Protected View
 var AdobePDFProtectedView = &AdobeRegistryRegExSingleDWORD{
-	RootKey:         registry.CURRENT_USER,
-	PathRegEx:       "SOFTWARE\\Adobe\\Acrobat Reader\\%s\\TrustManager",
-	ValueName:       "iProtectedView",
-	HardenedValue:   1,
-	AdobeVersions:   standardAdobeVersions,
-	shortName:       "Adobe Protected View",
-	longName:        "Acrobat Reader Protected View",
-	description:     "Enables Acrobat Reader Protected View for all files from untrusted sources. In the Protected View mode, most features are disabled. You can view the PDF, but not do much else. In the Protected View, a yellow bar displays on top of the Reader  window. Click Enable All Features to exit the Protected View.",
+	RootKey:       registry.CURRENT_USER,
+	PathRegEx:     "SOFTWARE\\Adobe\\Acrobat Reader\\%s\\TrustManager",
+	ValueName:     "iProtectedView",
+	HardenedValue: 1,
+	AdobeVersions: standardAdobeVersions,
+	shortName:     "Adobe Protected View",
+	longName:      "Acrobat Reader Protected View",
+	description: "Enables Acrobat Reader Protected View for all files from\n" +
+		"untrusted sources. In the Protected View mode,\n" +
+		"most features are disabled. You can view the PDF,\n" +
+		"but not do much else. In the Protected View, a yellow\n" +
+		"bar displays on top of the Reader  window. Click\n" +
+		"Enable All Features to exit the Protected View.",
 	hardenByDefault: true,
 }
 
@@ -126,9 +134,10 @@ var AdobePDFProtectedView = &AdobeRegistryRegExSingleDWORD{
 // (enabled by default in current versions)
 // (HKEY_CURRENT_USER\SOFTWARE\Adobe\Acrobat Reader\DC\TrustManager -> bEnhancedSecurityInBrowser = 1 & bEnhancedSecurityStandalone = 1)
 var AdobePDFEnhancedSecurity = &MultiHardenInterfaces{
-	shortName:       "Adobe Enhanced Security",
-	longName:        "Acrobat Reader Enhanced Security",
-	description:     "Enables Acrobat Reader Enhanced Security. This is already enabled by default in current Acrobat Reader versions.",
+	shortName: "Adobe Enhanced Security",
+	longName:  "Acrobat Reader Enhanced Security",
+	description: "Enables Acrobat Reader Enhanced Security. This is already\n" +
+		"enabled by default in current Acrobat Reader versions.",
 	hardenByDefault: true,
 	hardenInterfaces: []HardenInterface{
 		&AdobeRegistryRegExSingleDWORD{

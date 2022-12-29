@@ -211,12 +211,17 @@ func createMainGUIContent(elevationStatus bool) {
 		if on {
 			mainWindow.SetContent(container.NewVBox(expertTabWidget, mainTabWidget))
 		} else {
-			mainWindow.SetContent(container.NewVBox(container.NewHBox(widget.NewCard("", "Introduction", introText), help), mainTabWidget))
+			introTextWidget := widget.NewCard("", "Introduction", introText)
+			introAndHelpContainer := container.NewBorder(nil, nil, nil, help, introTextWidget)
+			mainWindow.SetContent(container.NewVBox(introAndHelpContainer, mainTabWidget))
 		}
 		mainWindow.CenterOnScreen()
 	})
 	mainTabContent.Add(expertSettingsCheckBox)
-	mainWindow.SetContent(container.NewVBox(container.NewHBox(widget.NewCard("", "Introduction", introText), help), mainTabWidget))
+
+	introTextWidget := widget.NewCard("", "Introduction", introText)
+	introAndHelpContainer := container.NewBorder(nil, nil, nil, help, introTextWidget)
+	mainWindow.SetContent(container.NewVBox(introAndHelpContainer, mainTabWidget))
 	mainWindow.CenterOnScreen()
 }
 

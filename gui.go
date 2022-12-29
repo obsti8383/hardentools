@@ -36,6 +36,8 @@ var stateLabels map[string]*widget.Label
 var inProgressLabel *widget.Label
 
 func mainGUI() {
+	mainWindow.CenterOnScreen()
+
 	// Check if hardentools has been started with elevated rights. If not
 	// ask user if she wants to elevate.
 	elevationStatus := isElevated()
@@ -54,11 +56,14 @@ func mainGUI() {
 
 // showSplash shows an splash content during initialization.
 func showSplash() {
+	progressBar := widget.NewProgressBarInfinite()
+	progressBar.Show()
 	splashContent := container.NewVBox(
 		widget.NewLabelWithStyle("Hardentools is starting up. Please wait...", fyne.TextAlignCenter, fyne.TextStyle{Monospace: true}),
-		widget.NewProgressBarInfinite())
-
+		progressBar)
 	mainWindow.SetContent(splashContent)
+	mainWindow.Resize(fyne.NewSize(550, 80))
+	mainWindow.CenterOnScreen()
 }
 
 // createMainGUIContent shows the main GUI screen that allows to harden or

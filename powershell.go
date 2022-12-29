@@ -45,7 +45,7 @@ var PowerShell = &MultiHardenInterfaces{
 	longName:  "Disable Powershell",
 	description: "Disables Powershell and Powershell ISE to protect\n" +
 		"you from some malwares to execute Powershell scripts.\n" +
-		"You won't be able to start Powershell anymore.\n",
+		"You won't be able to start Powershell anymore.",
 	hardenByDefault: true,
 	hardenInterfaces: []HardenInterface{
 		PowerShellDisallowRunMembers{

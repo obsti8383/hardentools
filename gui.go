@@ -21,6 +21,7 @@ package main
 import (
 	"errors"
 	"os"
+	"strings"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/container"
@@ -105,16 +106,22 @@ func createMainGUIContent(elevationStatus bool) {
 			enableField = false
 		}
 
-		check := widget.NewCheck(hardenSubject.LongName(), checkBoxEventGenerator(hardenSubject.Name()))
+		// setup check box widget
+		checkBoxEventFunc := func(hardenSubjName string) func(on bool) {
+			return func(on bool) {
+				expertConfig[hardenSubjName] = on
+			}
+		}(hardenSubject.Name())
+		check := widget.NewCheck(hardenSubject.LongName(), checkBoxEventFunc)
 		check.SetChecked(expertConfig[hardenSubject.Name()])
 		if !enableField {
 			check.Disable()
 		}
 
+		// setup help widget
 		onTapFunc := func(description string) func() {
-			var desc = description
 			return func() {
-				showInfoDialog(desc)
+				showInfoDialog(description)
 			}
 		}(hardenSubject.Description())
 		help := widget.NewButtonWithIcon("", theme.HelpIcon(), onTapFunc)
@@ -122,7 +129,7 @@ func createMainGUIContent(elevationStatus bool) {
 		expertCompWidgetArray[i] = container.NewHBox(help, check)
 	}
 
-	// Set labels / text fields (harden or restore).
+	// Setup labels / text fields (harden or restore).
 	if status == false {
 		buttonText = "Harden!"
 		buttonFunc = hardenAll
@@ -163,7 +170,7 @@ func createMainGUIContent(elevationStatus bool) {
 
 	introText := widget.NewLabelWithStyle("Hardentools is designed to disable a number of"+
 		" \"features\" exposed by Microsoft\n"+
-		"Windows and some widely used applications (Microsoft Office and Adobe PDF Reader,\n"+
+		"Windows and some widely used applications (Microsoft Office and Adobe PDF\n Reader, "+
 		"for now). These features, commonly thought for enterprise customers,\n"+
 		"are generally useless to regular users and rather pose as dangers as\n"+
 		"they are very commonly abused by attackers to execute malicious code\n"+
@@ -180,16 +187,36 @@ func createMainGUIContent(elevationStatus bool) {
 	)
 	mainTabWidget := widget.NewCard("", "", mainTabContent)
 
+	// setup help widget
+	onTapFuncForMainTab := func(allHardenSubjects []HardenInterface) func() {
+		helpText := "The following hardenings will be activated by default\n(you" +
+			" can deactivate hardenings or activate additional\nhardenings using the expert settings):\n\n"
+		for _, hardenSubject := range allHardenSubjects {
+			if hardenSubject.HardenByDefault() {
+				helpText += "• " + hardenSubject.LongName() + ":\n\t" +
+					strings.Replace(hardenSubject.Description(), "\n", "\n\t", -1) + "\n\n"
+			}
+		}
+		return func() {
+			w := appl.NewWindow("Hardentools - Help")
+			scroller := container.NewVScroll(widget.NewLabel(helpText))
+			scroller.SetMinSize(fyne.NewSize(500, 600))
+			w.SetContent(scroller)
+			w.Show()
+		}
+	}(allHardenSubjects)
+	help := widget.NewButtonWithIcon("", theme.HelpIcon(), onTapFuncForMainTab)
+
 	expertSettingsCheckBox = widget.NewCheck("Show Expert Settings", func(on bool) {
 		if on {
 			mainWindow.SetContent(container.NewVBox(expertTabWidget, mainTabWidget))
 		} else {
-			mainWindow.SetContent(container.NewVBox(widget.NewCard("", "Introduction", introText), mainTabWidget))
+			mainWindow.SetContent(container.NewVBox(container.NewHBox(widget.NewCard("", "Introduction", introText), help), mainTabWidget))
 		}
 		mainWindow.CenterOnScreen()
 	})
 	mainTabContent.Add(expertSettingsCheckBox)
-	mainWindow.SetContent(container.NewVBox(widget.NewCard("", "Introduction", introText), mainTabWidget))
+	mainWindow.SetContent(container.NewVBox(container.NewHBox(widget.NewCard("", "Introduction", introText), help), mainTabWidget))
 	mainWindow.CenterOnScreen()
 }
 
@@ -261,16 +288,6 @@ func askElevationDialog() {
 	cnf.Show()
 
 	<-ch
-}
-
-// checkBoxEventGenerator is a helper function that allows GUI checkbox elements
-// to call this function as a callback method. checkBoxEventGenerator then saves
-// the requested expert config setting for the checkbox in the corresponding map.
-func checkBoxEventGenerator(hardenSubjName string) func(on bool) {
-	var hardenSubjectName = hardenSubjName
-	return func(on bool) {
-		expertConfig[hardenSubjectName] = on
-	}
 }
 
 // restartWithElevatedPrivileges tries to restart hardentools.exe with admin

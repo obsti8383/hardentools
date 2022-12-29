@@ -80,7 +80,7 @@ var OfficeMacros = &OfficeRegistryRegExSingleDWORD{
 	OfficeVersions:  standardOfficeVersions,
 	shortName:       "Office Macros",
 	longName:        "Office Macros",
-	description:     "Disables macros in MS Office. Files that use macros might not work as expected.",
+	description:     "Disables macros in MS Office. Files\nthat use macros might not work as expected.",
 	hardenByDefault: true,
 }
 

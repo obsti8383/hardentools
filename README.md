@@ -30,6 +30,8 @@ Once you double-click on the icon of 'hardentools.exe', depending on your Window
 
 Then, you will see the main Hardentools window. It's very simple, you just click on the "Harden" button, and the tool will make the changes to your Windows configuration to disable a set of features that are risky. Once completed, you will be asked to restart your computer for all the changes to have full effect.
 
+You can get some technical information about the configuration changes that will be done by Hardentools by clicking the help button: ![MainWindowScreenshot](./graphics/helpButtonSymbol.png)
+
 ![MainWindowScreenshot](./graphics/MainWindow.png)
 
 Note: You can select the expert settings checkbox to be able to select or deselect specific harden measures. Please only use this if you know what you are doing.
